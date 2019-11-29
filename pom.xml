@@ -54,6 +54,33 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>dev-fake</id>
+            <properties>
+                <spring.profiles.active>fake</spring.profiles.active>
+                <filter.mode>local</filter.mode>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev-real</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <filter.mode>local</filter.mode>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <filter.mode>remote</filter.mode>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>

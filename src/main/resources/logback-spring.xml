@@ -2,9 +2,28 @@
 <configuration>
     <property name="LOGS" value="../logs/logging-app" />
 
+    <!-- -->
+    <timestamp key="timestamp" datePattern="yyyy-MM-dd" />
+    <springProperty name="loggingAppName" scope="context"
+                    source="app.logging.name" />
+    <property name="PROFILE" value="-${spring.profiles.active}" />
+    <!-- -->
+    <springProperty name="logFilePattern" scope="context"
+                    source="log.file.name.pattern" />
+    <springProperty name="logFileName" scope="context"
+                    source="app.logging.file.name" />
+    <springProperty name="profile" scope="context"
+                    source="app.logging.profile" />
+
+
+    <!-- -->
     <appender name="RollingFile"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/logging-application.log</file>
+        <!--<file>${LOGS}/${logFileName}-${timestamp}.log</file>-->
+
+        <!--<<file>${LOGS}-${profile}/${loggingAppName}.log</file>-->
+        <file>${logFileName}.log</file>
+
         <encoder
                 class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
@@ -13,7 +32,8 @@
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily and when the file reaches 10 MegaBytes -->
-            <fileNamePattern>${LOGS}/archived/logging-application-%d{yyyy-MM-dd}_%i.log
+            <!--<fileNamePattern>${LOGS}/archived/logging-application-%d{yyyy-MM-dd}_%i.log-->
+            <fileNamePattern>${LOGS}/archived/${loggingAppName}-%d{yyyy-MM-dd}_%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
